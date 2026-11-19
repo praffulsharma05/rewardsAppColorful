@@ -258,7 +258,7 @@ class UnifiedDatabaseService {
     for (const r of active) {
       if (rem <= 0) break;
       const pts = Number(r.rewardPoints) || 0;
-      if (pts <= rem) { rem -= pts; r.rewardPoints = 0; }
+      if (pts <= rem) { rem -= pts; r.rewardPoints = 0; r.status = 'USED'; }
       else { r.rewardPoints = pts - rem; rem = 0; }
       await this.updateReward(r);
     }

@@ -1007,7 +1007,14 @@
         let totalActivePoints = 0, activeCount = 0, expiredCount = 0;
         let nearestExpReward = null;
 
-        if (!rewards || rewards.length === 0) {
+        // ONLY show available unspent rewards, never used or empty
+        const availableRewards = (rewards || []).filter(r => {
+          const pts = Number(r.rewardPoints) || 0;
+          const isExp = r.expiryDate ? new Date(r.expiryDate) < now : false;
+          return pts > 0 && r.status !== 'USED' && !isExp;
+        });
+
+        if (availableRewards.length === 0) {
           emptyGainedState.classList.remove('u-hidden');
           totalPointsEl.textContent = '0';
           activeCountEl.textContent = '0 ACTIVE';
@@ -1016,23 +1023,14 @@
         }
 
         emptyGainedState.classList.add('u-hidden');
-        if (gainedBadge) gainedBadge.textContent = rewards.length;
+        if (gainedBadge) gainedBadge.textContent = availableRewards.length;
 
         // Sort rewards in priority queue: Near expiration on top!
-        const queueSortedRewards = [...rewards].sort((a, b) => {
-          const isExpA = a.expiryDate ? new Date(a.expiryDate) < now : false;
-          const isExpB = b.expiryDate ? new Date(b.expiryDate) < now : false;
-          if (!isExpA && isExpB) return -1;
-          if (isExpA && !isExpB) return 1;
-          if (!isExpA && !isExpB) {
-            const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : Infinity;
-            const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : Infinity;
-            if (timeA !== timeB) return timeA - timeB;
-            return new Date(b.orderDate || b.createdAt || 0) - new Date(a.orderDate || a.createdAt || 0);
-          }
-          const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : 0;
-          const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : 0;
-          return timeB - timeA;
+        const queueSortedRewards = [...availableRewards].sort((a, b) => {
+          const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : Infinity;
+          const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : Infinity;
+          if (timeA !== timeB) return timeA - timeB;
+          return new Date(b.orderDate || b.createdAt || 0) - new Date(a.orderDate || a.createdAt || 0);
         });
 
         queueSortedRewards.forEach(r => {

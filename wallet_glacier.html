@@ -885,13 +885,20 @@
         }
       }
 
-      // Render 1: Gained Rewards
+      // Render 1: Gained Rewards (ONLY show available unspent rewards, never used or empty)
       function renderGainedRewards(rewards) {
         rewardsListContainer.innerHTML = '';
         const now = new Date();
         let totalActivePoints = 0, activeCount = 0;
 
-        if (!rewards || rewards.length === 0) {
+        // ONLY keep available cards (points > 0, not used, not expired)
+        const availableRewards = (rewards || []).filter(r => {
+          const pts = Number(r.rewardPoints) || 0;
+          const isExp = r.expiryDate ? new Date(r.expiryDate) < now : false;
+          return pts > 0 && r.status !== 'USED' && !isExp;
+        });
+
+        if (availableRewards.length === 0) {
           emptyGainedState.classList.remove('u-hidden');
           totalPointsEl.textContent = '0';
           activeCountEl.textContent = '0 ACTIVE';
@@ -900,39 +907,20 @@
         }
 
         emptyGainedState.classList.add('u-hidden');
-        if (gainedBadge) gainedBadge.textContent = rewards.length;
+        if (gainedBadge) gainedBadge.textContent = availableRewards.length;
 
         // Sort rewards in priority queue: Near expiration on top!
-        // 1. Active rewards with earliest expiry date first (near expiry on top)
-        // 2. Active rewards with no expiry
-        // 3. Expired rewards at the bottom
-        const queueSortedRewards = [...rewards].sort((a, b) => {
-          const isExpA = a.expiryDate ? new Date(a.expiryDate) < now : false;
-          const isExpB = b.expiryDate ? new Date(b.expiryDate) < now : false;
-
-          if (!isExpA && isExpB) return -1;
-          if (isExpA && !isExpB) return 1;
-
-          if (!isExpA && !isExpB) {
-            const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : Infinity;
-            const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : Infinity;
-            if (timeA !== timeB) return timeA - timeB;
-            return new Date(b.orderDate || b.createdAt || 0) - new Date(a.orderDate || a.createdAt || 0);
-          }
-
-          const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : 0;
-          const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : 0;
-          return timeB - timeA;
+        const queueSortedRewards = [...availableRewards].sort((a, b) => {
+          const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : Infinity;
+          const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : Infinity;
+          if (timeA !== timeB) return timeA - timeB;
+          return new Date(b.orderDate || b.createdAt || 0) - new Date(a.orderDate || a.createdAt || 0);
         });
 
         queueSortedRewards.forEach(r => {
           const pts = Number(r.rewardPoints) || 0;
-          const isExp = r.expiryDate ? new Date(r.expiryDate) < now : false;
-
-          if (!isExp && pts > 0) {
-            totalActivePoints += pts;
-            activeCount++;
-          }
+          totalActivePoints += pts;
+          activeCount++;
 
           let miniExp = 'No Expiry';
           let isNearExpiry = false;
@@ -941,32 +929,23 @@
           if (r.expiryDate) {
             const expD = new Date(r.expiryDate);
             const dateStr = expD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-            if (isExp) {
-              miniExp = 'Expired';
-            } else {
-              const diffMs = expD.getTime() - now.getTime();
-              diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-              if (diffDays <= 30) {
-                isNearExpiry = true;
-                if (diffDays <= 0 || diffDays === 1) {
-                  miniExp = '⏱️ Exp: Today';
-                } else if (diffDays <= 7) {
-                  miniExp = `⏱️ Exp in ${diffDays}d`;
-                } else {
-                  miniExp = `Exp: ${expD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} (${diffDays}d)`;
-                }
+            const diffMs = expD.getTime() - now.getTime();
+            diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            if (diffDays <= 30) {
+              isNearExpiry = true;
+              if (diffDays <= 0 || diffDays === 1) {
+                miniExp = '⏱️ Exp: Today';
+              } else if (diffDays <= 7) {
+                miniExp = `⏱️ Exp in ${diffDays}d`;
               } else {
-                miniExp = `Exp: ${dateStr}`;
+                miniExp = `Exp: ${expD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} (${diffDays}d)`;
               }
+            } else {
+              miniExp = `Exp: ${dateStr}`;
             }
           }
 
-          let expPillClass = 'pill-active';
-          if (isExp) {
-            expPillClass = 'pill-expired';
-          } else if (isNearExpiry) {
-            expPillClass = 'pill-expiring-soon';
-          }
+          const expPillClass = isNearExpiry ? 'pill-expiring-soon' : 'pill-active';
 
           let expFullStr = 'No Expiry';
           if (r.expiryDate) {
@@ -985,7 +964,7 @@
           }
 
           const card = document.createElement('div');
-          card.className = `reward-card ${isExp ? 'is-expired' : ''} ${isNearExpiry ? 'is-near-expiry' : ''}`;
+          card.className = `reward-card ${isNearExpiry ? 'is-near-expiry' : ''}`;
           card.innerHTML = `
             <div class="reward-card-header-btn" role="button" tabindex="0" aria-expanded="false">
               <div class="reward-card-item">
@@ -993,7 +972,7 @@
                 <div class="reward-card-info">
                   <div class="reward-card-title">${r.productName || 'Order Reward'}</div>
                   <div class="reward-card-subrow">
-                    <span class="reward-pts-grant ${isExp ? 'is-expired-pts' : ''}">+${pts.toLocaleString()} PTS</span>
+                    <span class="reward-pts-grant">+${pts.toLocaleString()} PTS</span>
                     <span class="card-pill-mini ${expPillClass}">${miniExp}</span>
                   </div>
                 </div>
@@ -1008,8 +987,8 @@
                 <div class="reward-breakdown-card">
                   <div class="breakdown-card-top">
                     <span class="breakdown-card-title">Reward Details</span>
-                    <span class="breakdown-status-badge ${isExp ? 'is-expired' : (isNearExpiry ? 'is-expiring-soon' : 'is-active')}">
-                      ${isExp ? 'Expired' : (isNearExpiry ? 'Expiring Soon' : 'Verified Order')}
+                    <span class="breakdown-status-badge ${isNearExpiry ? 'is-expiring-soon' : 'is-active'}">
+                      ${isNearExpiry ? 'Expiring Soon' : 'Verified Order'}
                     </span>
                   </div>
                   <div class="breakdown-row">
@@ -1031,8 +1010,8 @@
                   </div>` : ''}
                   <div class="breakdown-row">
                     <span class="breakdown-label">Valid Until</span>
-                    <span class="breakdown-val ${isExp ? 'font-expired' : (isNearExpiry ? 'font-expiring-soon' : 'font-valid')}">
-                      ${expFullStr}${(!isExp && diffDays !== null && diffDays <= 30) ? ` (in ${diffDays}d)` : ''}
+                    <span class="breakdown-val ${isNearExpiry ? 'font-expiring-soon' : 'font-valid'}">
+                      ${expFullStr}${diffDays !== null && diffDays <= 30 ? ` (in ${diffDays}d)` : ''}
                     </span>
                   </div>
                 </div>

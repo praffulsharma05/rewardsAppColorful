@@ -75,7 +75,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let totalActivePoints = 0, activeCount = 0, expiredCount = 0;
     let nearestExpReward = null;
 
-    if (!rewards || rewards.length === 0) {
+    const availableRewards = (rewards || []).filter(r => (Number(r.rewardPoints) || 0) > 0 && r.status !== 'USED' && (!r.expiryDate || new Date(r.expiryDate) > now));
+
+    if (availableRewards.length === 0) {
       emptyGainedState.classList.remove('u-hidden');
       totalPointsEl.textContent = '0';
       activeCountEl.textContent = '0 ACTIVE';
@@ -85,9 +87,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     emptyGainedState.classList.add('u-hidden');
-    if (gainedBadge) gainedBadge.textContent = rewards.length;
+    if (gainedBadge) gainedBadge.textContent = availableRewards.length;
 
-    rewards.forEach(r => {
+    availableRewards.forEach(r => {
       const pts = Number(r.rewardPoints) || 0;
       const isExp = r.expiryDate ? new Date(r.expiryDate) < now : false;
 

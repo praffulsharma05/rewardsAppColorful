@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Admin Panel - Rewards Points collection for customers</title>
+  <link rel="stylesheet" href="css/wireframe.css">
+</head>
+<body>
+  <div class="mobile-device-shell">
+    <header class="mobile-status-bar">
+      <span>9:41</span>
+      <div class="notch-pill"></div>
+      <span class="header-pill">ADMIN</span>
+    </header>
+
+    <div class="mobile-header">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--brand-primary)" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="header-title" style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900);">Admin Panel</span>
+      </div>
+      <button class="header-btn" id="btn-admin-refresh" title="Reset Forms & Refresh DB">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <span>Reset</span>
+      </button>
+    </div>
+
+    <div class="wf-toast" id="admin-toast">Admin updated successfully</div>
+
+    <main class="mobile-viewport">
+      <!-- SCREEN 1: GRANT REWARD POINTS (FORM) -->
+      <section class="admin-screen active" id="screen-grant">
+        <div class="wf-card highlight" style="padding: 6px 10px; margin-bottom: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="wf-title-sm" style="font-size: 0.84rem;">Grant Reward Points</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" id="btnResetForm" class="wf-btn wf-btn-sm wf-btn-secondary" style="padding: 3px 8px; font-size: 0.68rem; width: auto;">Reset</button>
+              <button type="button" id="btnSampleData" class="wf-btn wf-btn-sm wf-btn-secondary" style="padding: 3px 8px; font-size: 0.68rem; width: auto;">Sample (15k)</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="adminRewardForm">
+          <div class="wf-card" style="padding: 8px; margin-bottom: 6px;">
+            <div class="form-section-title">1. Customer Information</div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="customerName">Name *</label>
+              <input type="text" id="customerName" name="customerName" class="wf-input wf-input-compact" placeholder="Rahul Sharma" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="customerPhone">Phone No. *</label>
+              <input type="tel" id="customerPhone" name="customerPhone" class="wf-input wf-input-compact" placeholder="9876543210" pattern="[0-9]{10}" maxlength="10" required>
+            </div>
+
+            <div class="form-section-title">2. Order Details</div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="orderId">Order ID *</label>
+              <input type="text" id="orderId" name="orderId" class="wf-input wf-input-compact" placeholder="ORD-15099" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="orderDate">Date *</label>
+              <input type="date" id="orderDate" name="orderDate" class="wf-input wf-input-compact" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="productName">Product Name *</label>
+              <input type="text" id="productName" name="productName" class="wf-input wf-input-compact" placeholder="e.g. Smartphone 5G" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="orderAmount">Amount (₹) *</label>
+              <input type="number" id="orderAmount" name="orderAmount" class="wf-input wf-input-compact" placeholder="15000" min="0" required style="font-weight: 700;">
+            </div>
+
+            <div id="pointsGivenContainer" class="wf-form-group" style="display: none; margin-bottom: 4px; padding: 6px 8px; background: #fafafa; border: 1.5px dashed #111; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                <label class="wf-label" for="rewardPoints" id="rewardPointsLabel" style="margin-bottom: 0; font-weight: 700;">Points Given *</label>
+                <span class="header-pill" id="pointsGivenRateBadge" style="font-size: 0.62rem; padding: 1px 5px;">10% Policy</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <input type="number" id="rewardPoints" name="rewardPoints" class="wf-input wf-input-compact" placeholder="0" min="1" readonly style="font-weight: 800; font-size: 0.95rem; flex: 1; background: #fff;">
+                <span style="font-size: 0.72rem; font-weight: 700;">PTS</span>
+              </div>
+            </div>
+
+            <div class="wf-form-group" style="margin-bottom: 0; margin-top: 6px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                <label class="wf-label" for="productPhoto" style="margin-bottom: 0;">Product Photo (Optional)</label>
+                <button type="button" id="btnUseSampleTvPhotoGrant" class="wf-btn wf-btn-sm wf-btn-secondary" style="padding: 1px 7px; font-size: 0.65rem; line-height: 1.3; width: auto;">📷 TV Photo</button>
+              </div>
+              <div class="compact-photo-row">
+                <input type="file" id="productPhoto" name="productPhoto" class="wf-input wf-input-compact" accept="image/*" style="padding: 2px 4px; font-size: 0.7rem; flex: 1;">
+                <div id="photoPreview" class="compact-thumb-box" style="width: 52px; height: 38px; border-radius: 6px;"><span>NO PHOTO</span></div>
+              </div>
+            </div>
+
+            <div id="policyHiddenParams" style="display: none;" aria-hidden="true">
+              <input type="number" id="rewardPercent" name="rewardPercent" value="10">
+              <input type="datetime-local" id="expiryDate" name="expiryDate">
+              <input type="number" id="cappingPercent" name="cappingPercent" value="50">
+              <input type="number" id="minOrderAmount" name="minOrderAmount" value="10000">
+            </div>
+          </div>
+
+          <button type="submit" class="wf-btn" id="btnSubmitReward" style="margin-bottom: 6px; padding: 8px; font-size: 0.8rem;">
+            Save &amp; Issue Reward Points
+          </button>
+        </form>
+      </section>
+
+      <!-- SCREEN 2: APPLY REWARDS ON PRODUCT (AUTOMATIC CAPPING) -->
+      <section class="admin-screen" id="screen-apply">
+        <div class="wf-card highlight" style="padding: 6px 10px; margin-bottom: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="wf-title-sm" style="font-size: 0.84rem;">Apply Rewards on Product</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" id="btnResetApplyForm" class="wf-btn wf-btn-sm wf-btn-secondary" style="padding: 3px 8px; font-size: 0.68rem; width: auto;">Reset</button>
+              <button type="button" id="btnSampleApplyData" class="wf-btn wf-btn-sm wf-btn-secondary" style="padding: 3px 8px; font-size: 0.68rem; width: auto;">Sample (₹20k)</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="adminApplyRewardForm">
+          <div class="wf-card" style="padding: 8px; margin-bottom: 6px;">
+            <div class="form-section-title">1. Customer</div>
+            <div class="wf-form-group" style="margin-bottom: 4px;">
+              <label class="wf-label" for="applyCustomerSelect">Select Customer *</label>
+              <select id="applyCustomerSelect" class="wf-input wf-input-compact" required></select>
+            </div>
+
+            <div class="form-section-title">2. Order &amp; Product Details</div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="applyOrderId">Order ID *</label>
+              <input type="text" id="applyOrderId" class="wf-input wf-input-compact" placeholder="ORD-APPLY-1001" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="applyProductName">New Product Name *</label>
+              <input type="text" id="applyProductName" class="wf-input wf-input-compact" placeholder="Smart LED 4K TV" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="applyProductPrice">Product Price (₹) *</label>
+              <input type="number" id="applyProductPrice" class="wf-input wf-input-compact" placeholder="20000" min="1" required style="font-weight: 700;">
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                <label class="wf-label" for="applyProductPhoto" style="margin-bottom: 0;">Product Photo (Optional)</label>
+                <button type="button" id="btnUseSampleTvPhotoApply" class="wf-btn wf-btn-sm wf-btn-secondary" style="padding: 1px 7px; font-size: 0.65rem; line-height: 1.3; width: auto;">📷 TV Photo</button>
+              </div>
+              <div class="compact-photo-row">
+                <input type="file" id="applyProductPhoto" class="wf-input wf-input-compact" accept="image/*" style="padding: 2px 4px; font-size: 0.7rem; flex: 1;">
+                <div id="applyPhotoPreview" class="compact-thumb-box" style="width: 52px; height: 38px; border-radius: 6px;"><span>NO PHOTO</span></div>
+              </div>
+            </div>
+
+            <div class="form-section-title">3. Auto-Calculated Due to Shopkeeper</div>
+            <div class="reward-breakdown-card" style="margin-top: 4px; margin-bottom: 8px; padding: 8px 10px;">
+              <div class="breakdown-row">
+                <span class="breakdown-label">Original Price:</span>
+                <span class="breakdown-val breakdown-bold" id="applySummaryPrice">₹20,000</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Capped Rewards Applied (-):</span>
+                <span class="breakdown-val font-brand-blue" id="applySummaryPointsApplied">-8,000 PTS (₹8,000)</span>
+              </div>
+              <div class="breakdown-row" style="border-top: 1px dashed #cbd5e1; padding-top: 4px;">
+                <span class="breakdown-label" style="font-weight: 700; color: #0f172a;">Due to Shopkeeper:</span>
+                <span class="breakdown-val breakdown-bold" id="applyDueAmountDisplay" style="font-size: 0.95rem; color: #b91c1c;">₹12,000</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="wf-btn" id="btnSubmitApplyReward" style="margin-bottom: 6px; padding: 8px; font-size: 0.8rem;">
+            Apply Rewards &amp; Complete Sale
+          </button>
+        </form>
+      </section>
+
+      <!-- SCREEN 3: ISSUED REWARDS & REDEMPTIONS FEED -->
+      <section class="admin-screen" id="screen-issued">
+        <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+          <button type="button" class="wf-btn wf-btn-sm" id="btnFeedAll" style="flex: 1; padding: 4px;">All Granted</button>
+          <button type="button" class="wf-btn wf-btn-sm wf-btn-secondary" id="btnFeedApplied" style="flex: 1; padding: 4px;">Applied Redemptions</button>
+        </div>
+        <div id="adminRewardsList"></div>
+      </section>
+
+      <!-- SCREEN 4: GLOBAL POLICY SETTINGS -->
+      <section class="admin-screen" id="screen-settings">
+        <form id="adminSettingsForm">
+          <div class="wf-card">
+            <div class="wf-card-header" style="margin-bottom: 6px;">
+              <strong class="wf-title-sm">1. Default Reward Rate %</strong>
+              <span class="header-pill" id="settingsBadgeReward">10%</span>
+            </div>
+            <div class="wf-form-group">
+              <label class="wf-label" for="settingRewardPercent">Default Reward Rate (%) *</label>
+              <input type="number" id="settingRewardPercent" class="wf-input" min="0" max="100" step="0.5" value="10" required>
+            </div>
+          </div>
+          <div class="wf-card">
+            <div class="wf-card-header" style="margin-bottom: 6px;">
+              <strong class="wf-title-sm">2. Expiry Duration</strong>
+              <span class="header-pill" id="settingsBadgeExpiry">2 Months</span>
+            </div>
+            <div class="wf-form-group">
+              <label class="wf-label" for="settingExpiryMonths">Validity Period (Months) *</label>
+              <input type="number" id="settingExpiryMonths" class="wf-input" min="1" max="60" value="2" required>
+            </div>
+          </div>
+          <div class="wf-card">
+            <div class="wf-card-header" style="margin-bottom: 6px;">
+              <strong class="wf-title-sm">3. Redemption Capping &amp; Min Order</strong>
+              <span class="header-pill" id="settingsBadgeCapping">50% / ₹10,000</span>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="settingCappingPercent">Max Capping % *</label>
+              <input type="number" id="settingCappingPercent" class="wf-input" min="1" max="100" value="50" required>
+            </div>
+            <div class="wf-form-group" style="margin-bottom: 8px;">
+              <label class="wf-label" for="settingMinOrderAmount">Min Order (₹) *</label>
+              <input type="number" id="settingMinOrderAmount" class="wf-input" min="0" value="10000" required>
+            </div>
+          </div>
+          <button type="submit" class="wf-btn" style="margin-bottom: 12px;">Save &amp; Apply All Settings</button>
+        </form>
+      </section>
+
+      <!-- SCREEN 5: SYSTEM OVERVIEW -->
+      <section class="admin-screen" id="screen-overview">
+        <div class="stat-grid-2">
+          <div class="stat-box"><span class="stat-number" id="stat-issued-points">0</span><span class="stat-label">Total Points</span></div>
+          <div class="stat-box"><span class="stat-number" id="stat-rewards-count">0</span><span class="stat-label">Issued Records</span></div>
+          <div class="stat-box"><span class="stat-number" id="stat-users-count">1</span><span class="stat-label">Customers</span></div>
+          <div class="stat-box"><span class="stat-number" id="stat-applied-count">0</span><span class="stat-label">Applied Redemptions</span></div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="mobile-bottom-nav">
+      <button type="button" class="nav-tab-item active" data-screen="screen-grant">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+        <span>Grant</span>
+      </button>
+      <button type="button" class="nav-tab-item" data-screen="screen-apply">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        <span>Apply</span>
+      </button>
+      <button type="button" class="nav-tab-item" data-screen="screen-issued">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+        <span>Issued</span>
+      </button>
+      <button type="button" class="nav-tab-item" data-screen="screen-settings">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <span>Settings</span>
+      </button>
+      <button type="button" class="nav-tab-item" data-screen="screen-overview">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span>
+        <span>Overview</span>
+      </button>
+    </nav>
+
+    <!-- Confirm Delete Modal Popup -->
+    <div id="confirmDeleteModal" class="confirm-modal-backdrop" style="display: none;">
+      <div class="confirm-modal-box">
+        <div class="confirm-modal-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+        </div>
+        <h4 class="confirm-modal-title">Delete Reward?</h4>
+        <p id="confirmDeleteModalMsg" class="confirm-modal-msg">Are you sure you want to delete this reward?</p>
+        <div class="confirm-modal-actions">
+          <button type="button" id="btnCancelDelete" class="btn-modal-cancel">Cancel</button>
+          <button type="button" id="btnConfirmDelete" class="btn-modal-delete">Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/admin_apply.js"></script>
+</body>
+</html>

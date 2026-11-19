@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Customer Wallet - Pastel Lavender Mist Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* -------------------------------------------------------------
+       PASTEL LAVENDER MIST DESIGN SYSTEM (Pure White & Soft Lilac)
+       ------------------------------------------------------------- */
+    :root {
+      --bg-page: #f8f6fc;
+      --bg-white: #ffffff;
+      
+      /* Pastel Lavender Palette */
+      --lavender-50: #fbf8ff;
+      --lavender-100: #f5f0ff;
+      --lavender-200: #ebdcfc;
+      --lavender-300: #d8b4fe;
+      --lavender-400: #c084fc;
+      --lavender-500: #a855f7;
+      --lavender-600: #9333ea;
+      --lavender-700: #7e22ce;
+      --lavender-800: #6b21a8;
+      --lavender-900: #581c87;
+      --lavender-950: #2e1065;
+
+      /* Text Colors */
+      --text-main: #2e1065;
+      --text-body: #4c1d95;
+      --text-muted: #7c6f96;
+      --text-faint: #9c92b2;
+
+      /* Accents */
+      --emerald-accent: #059669;
+      --emerald-bg: #ecfdf5;
+      --emerald-border: #a7f3d0;
+      --rose-accent: #e11d48;
+      --rose-bg: #fff1f2;
+      --gold-accent: #d97706;
+
+      --shadow-soft: 0 4px 20px -2px rgba(124, 58, 237, 0.05);
+      --shadow-card: 0 8px 24px -4px rgba(124, 58, 237, 0.08);
+      --shadow-hover: 0 12px 30px -4px rgba(124, 58, 237, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fbf9fe 0%, #f3edf9 50%, #eee6f7 100%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Soft Glow Behind Phone */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(235, 220, 252, 0.7) 0%, rgba(245, 240, 255, 0) 70%);
+      filter: blur(50px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Mobile Device Shell */
+    .mobile-device-shell {
+      width: 100%;
+      max-width: 416px;
+      min-height: 780px;
+      background: #ffffff;
+      border-radius: 44px;
+      box-shadow: 0 25px 65px -15px rgba(107, 33, 168, 0.15), 0 0 0 1px rgba(235, 220, 252, 0.9);
+      border: 8px solid #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Status Bar */
+    .mobile-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px 4px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--lavender-900);
+      background: #ffffff;
+      z-index: 10;
+    }
+
+    .notch-pill {
+      width: 110px;
+      height: 22px;
+      background: #f5f0ff;
+      border-radius: 20px;
+      border: 1px solid var(--lavender-200);
+    }
+
+    .header-pill {
+      background: var(--lavender-100);
+      color: var(--lavender-800);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--lavender-200);
+    }
+
+    /* Header Profile Strip */
+    .mobile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--lavender-100);
+    }
+
+    .wallet-header-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wallet-avatar-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f5f0ff 0%, #ebdcfc 100%);
+      border: 1.5px solid var(--lavender-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(147, 51, 234, 0.1);
+    }
+
+    .wallet-avatar-initial {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--lavender-800);
+    }
+
+    .wallet-avatar-online {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 11px;
+      height: 11px;
+      background: var(--emerald-accent);
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+    }
+
+    .wallet-header-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wallet-user-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wallet-user-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--lavender-950);
+      letter-spacing: -0.01em;
+    }
+
+    .user-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--emerald-bg);
+      color: var(--emerald-accent);
+      border: 1px solid var(--emerald-border);
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .wallet-user-phone {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .wallet-nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wallet-exit-pill-btn {
+      background: var(--lavender-100);
+      border: 1px solid var(--lavender-200);
+      color: var(--lavender-800);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .wallet-exit-pill-btn:hover {
+      background: var(--lavender-200);
+      color: var(--lavender-950);
+    }
+
+    /* Main Scrollable Viewport */
+    .mobile-viewport {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 16px 18px 30px;
+      background: #ffffff;
+      scroll-behavior: smooth;
+    }
+
+    /* HERO BALANCE BOX (Pastel Lavender Mist - Fully Centered) */
+    .wallet-hero-box {
+      background: linear-gradient(135deg, #FAF5FF 0%, #F5F0FF 45%, #EBDCFC 100%);
+      border: 1.5px solid var(--lavender-200);
+      border-radius: 26px;
+      padding: 24px 20px 22px;
+      box-shadow: 0 12px 30px -6px rgba(124, 58, 237, 0.08);
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Ambient Subtle Sheen */
+    .wallet-hero-box::after {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-title-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--lavender-800);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+
+    .wallet-hero-points {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0 14px;
+      width: 100%;
+    }
+
+    .star-gold {
+      font-size: 2.1rem;
+      color: #9333ea;
+      filter: drop-shadow(0 2px 6px rgba(147, 51, 234, 0.25));
+    }
+
+    #totalPoints {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--lavender-950);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .wallet-pills-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    .hero-pill-dark {
+      background: #ffffff;
+      border: 1px solid var(--lavender-200);
+      padding: 5px 12px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .pill-active {
+      color: var(--emerald-accent);
+    }
+    .glow-dot-emerald {
+      width: 7px;
+      height: 7px;
+      background: var(--emerald-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    .pill-expired {
+      color: var(--lavender-700);
+    }
+
+    /* Policy Strip (Pastel Collapsible Drawer) */
+    .policy-strip-wallet {
+      background: #ffffff;
+      border: 1px solid var(--lavender-200);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .policy-card-shell {
+      width: 100%;
+    }
+
+    .glass-policy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      cursor: pointer;
+      user-select: none;
+      background: #ffffff;
+      transition: background 0.2s ease;
+    }
+    .glass-policy-header:hover {
+      background: var(--lavender-50);
+    }
+
+    .policy-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .policy-dot-purple {
+      width: 8px;
+      height: 8px;
+      background: var(--lavender-600);
+      border-radius: 50%;
+    }
+    .glass-policy-title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--lavender-900);
+      letter-spacing: 0.05em;
+    }
+
+    .policy-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--lavender-700);
+    }
+
+    .policy-chevron-icon {
+      display: inline-flex;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .policy-card-shell.is-open .policy-chevron-icon {
+      transform: rotate(180deg);
+    }
+
+    .policy-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+    .policy-card-shell.is-open .policy-drawer {
+      grid-template-rows: 1fr;
+    }
+    .policy-drawer-inner {
+      min-height: 0;
+      padding: 0 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .policy-capping-bar {
+      background: var(--lavender-50);
+      border: 1px solid var(--lavender-200);
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.74rem;
+      color: var(--lavender-900);
+      font-weight: 600;
+    }
+    .policy-pct-val {
+      color: var(--lavender-700);
+      font-weight: 800;
+    }
+
+    .policy-nearest-expire-box {
+      background: #fffbeb;
+      border: 1px dashed #fde68a;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.72rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .policy-nearest-warning { color: #92400e; font-weight: 800; }
+    .policy-nearest-text { color: #78350f; font-weight: 600; }
+    .policy-nearest-valid { color: #047857; font-weight: 700; }
+
+    /* SEGMENTED SWITCHER (Gained vs Applied) */
+    .wallet-segment-bar {
+      display: flex;
+      background: var(--lavender-100);
+      border: 1.5px solid var(--lavender-200);
+      border-radius: 16px;
+      padding: 4px;
+      margin-bottom: 18px;
+    }
+
+    .wallet-segment-btn {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--lavender-700);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .wallet-segment-btn.active {
+      background: #ffffff;
+      color: var(--lavender-950);
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+    }
+
+    .segment-badge {
+      background: var(--lavender-200);
+      color: var(--lavender-900);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+    .wallet-segment-btn.active .segment-badge {
+      background: var(--lavender-100);
+      color: var(--lavender-800);
+    }
+
+    /* REWARD CARDS (Pastel Collapsible Architecture) */
+    .reward-card {
+      background: #ffffff;
+      border: 1.5px solid var(--lavender-100);
+      border-radius: 18px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reward-card:hover {
+      border-color: var(--lavender-200);
+      box-shadow: var(--shadow-card);
+    }
+    .reward-card.is-expanded {
+      border-color: var(--lavender-300);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .reward-card-header-btn {
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .reward-card-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .thumb-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--lavender-100);
+      border: 1px solid var(--lavender-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .reward-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .reward-card-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--lavender-950);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .reward-card-subrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .reward-pts-grant {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--emerald-accent);
+    }
+    .reward-pts-grant.is-expired-pts {
+      color: var(--text-faint);
+      text-decoration: line-through;
+    }
+
+    .card-pill-mini {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .card-pill-mini.pill-active {
+      background: var(--lavender-100);
+      color: var(--lavender-800);
+      border: 1px solid var(--lavender-200);
+    }
+    .card-pill-mini.pill-expired {
+      background: var(--rose-bg);
+      color: var(--rose-accent);
+      border: 1px solid #fecdd3;
+    }
+
+    .card-date-text {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .pill-order-ref {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--lavender-100);
+      color: var(--lavender-900);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .reward-card-chevron-box {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--lavender-100);
+      border: 1px solid var(--lavender-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lavender-700);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease;
+      flex-shrink: 0;
+    }
+    .reward-card.is-expanded .reward-card-chevron-box {
+      transform: rotate(180deg);
+      background: var(--lavender-200);
+      color: var(--lavender-950);
+    }
+    .reward-card-chevron-box svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    /* Expandable Drawer (100% hidden when collapsed - zero leakage) */
+    .reward-card-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      visibility: hidden;
+    }
+    .reward-card.is-expanded .reward-card-drawer {
+      grid-template-rows: 1fr;
+      visibility: visible;
+    }
+    .reward-card:not(.is-expanded) .reward-card-drawer {
+      display: none !important;
+    }
+    .reward-drawer-inner {
+      min-height: 0;
+       opacity: 0;
+      transition: opacity 0.22s ease 0.05s;
+    }
+    .reward-card.is-expanded .reward-drawer-inner {
+      opacity: 1;
+    }
+
+    /* Breakdown Details Card */
+    .reward-breakdown-card {
+      background: linear-gradient(135deg, #fcfaff 0%, #f7f2fe 100%);
+      border: 1.5px solid var(--lavender-200);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.04);
+    }
+
+    .breakdown-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--lavender-200);
+    }
+    .breakdown-card-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--lavender-900);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .breakdown-status-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .breakdown-status-badge.is-active {
+      background: var(--emerald-bg);
+      color: var(--emerald-accent);
+      border: 1px solid var(--emerald-border);
+    }
+    .breakdown-status-badge.is-expired {
+      background: var(--rose-bg);
+      color: var(--rose-accent);
+      border: 1px solid #fecdd3;
+    }
+    .breakdown-status-badge.is-applied {
+      background: var(--lavender-100);
+      color: var(--lavender-800);
+      border: 1px solid var(--lavender-200);
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+    }
+    .breakdown-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .breakdown-val {
+      color: var(--lavender-950);
+      font-weight: 700;
+    }
+    .val-order-code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--lavender-800);
+    }
+    .breakdown-bold {
+      font-weight: 800;
+      color: var(--lavender-950);
+    }
+    .badge-reward-rate {
+      background: var(--lavender-100);
+      color: var(--lavender-800);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 0.68rem;
+    }
+    .font-valid { color: var(--emerald-accent); }
+    .font-expired { color: var(--rose-accent); }
+    .font-redeemed-pts { color: var(--lavender-700); font-weight: 800; }
+    .breakdown-due-amount { color: var(--lavender-950); font-weight: 800; font-size: 0.85rem; }
+
+    /* Empty State */
+    .empty-wallet-card {
+      text-align: center;
+      padding: 36px 20px;
+      border: 2px dashed var(--lavender-200);
+      border-radius: 20px;
+      background: var(--lavender-50);
+      margin-top: 10px;
+    }
+    .empty-wallet-card strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--lavender-900);
+      margin-bottom: 4px;
+    }
+    .empty-wallet-card p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .u-hidden { display: none !important; }
+
+    /* Top Floating Switch Bar to switch between original & pastel */
+    .floating-switcher {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .switch-link {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--lavender-200);
+      color: var(--lavender-900);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.06);
+      transition: all 0.2s ease;
+    }
+    .switch-link:hover {
+      background: #ffffff;
+      border-color: var(--lavender-400);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Switcher -->
+  <div class="floating-switcher">
+    <a href="wallet_glacier.html" class="switch-link" style="background: #eaf3fa; color: #163654; border-color: #b5d5f0;">
+      ❄️ Glacier Blue Edition
+    </a>
+    <a href="wallet.html" class="switch-link">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Original wallet.html
+    </a>
+    <a href="pastel_wallet_designs.html" class="switch-link">
+      🌸 All 10 Pastel Designs
+    </a>
+  </div>
+
+  <!-- Mobile Device Shell with Complete Wallet Components -->
+  <div class="mobile-device-shell">
+    
+    <!-- Status Bar -->
+    <header class="mobile-status-bar">
+      <span>9:41</span>
+      <div class="notch-pill"></div>
+      <span class="header-pill">LAVENDER</span>
+    </header>
+
+    <!-- Header with Profile, Verification & Exit -->
+    <div class="mobile-header">
+      <div class="wallet-header-profile">
+        <div class="wallet-avatar-box">
+          <span class="wallet-avatar-initial" id="userAvatarInitial">H</span>
+          <span class="wallet-avatar-online"></span>
+        </div>
+        <div class="wallet-header-info">
+          <div class="wallet-user-row">
+            <strong id="customerName" class="wallet-user-name">Harish</strong>
+            <span class="user-verified-badge">
+              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Verified
+            </span>
+          </div>
+          <small id="customerPhone" class="wallet-user-phone">+91 4353535353</small>
+        </div>
+      </div>
+      <div class="wallet-nav-buttons">
+        <button class="wallet-exit-pill-btn" id="btnLogout" type="button">
+          <span>Exit</span>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable Viewport -->
+    <main class="mobile-viewport">
+      
+      <!-- Hero Points Balance Box -->
+      <div class="wallet-hero-box">
+        <span class="hero-title-label">TOTAL AVAILABLE REWARD POINTS</span>
+        <div class="wallet-hero-points">
+          <span id="totalPoints">0</span>
+        </div>
+        <div class="wallet-pills-row">
+          <span class="hero-pill-dark pill-active">
+            <span class="glow-dot-emerald"></span>
+            <span id="activeCount">0 ACTIVE</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Segmented View Switcher: Gained vs Applied Lists -->
+      <div class="wallet-segment-bar">
+        <button type="button" class="wallet-segment-btn active" id="tabGainedRewards">
+          <span>Gained Rewards</span>
+          <span class="segment-badge" id="gainedCountBadge">0</span>
+        </button>
+        <button type="button" class="wallet-segment-btn" id="tabAppliedRewards">
+          <span>Applied on Products</span>
+          <span class="segment-badge" id="appliedCountBadge">0</span>
+        </button>
+      </div>
+
+      <!-- LIST SCREEN 1: GAINED REWARDS (Collapsible View with Points & Expiry) -->
+      <section id="viewGainedRewards" class="wallet-view-section">
+        <div id="rewardsListContainer"></div>
+        <div id="emptyGainedState" class="empty-wallet-card u-hidden">
+          <strong>No Rewards in Wallet</strong>
+          <p>Earned rewards from orders will appear here.</p>
+        </div>
+      </section>
+
+      <!-- LIST SCREEN 2: APPLIED REWARDS ON PRODUCTS (Separate View) -->
+      <section id="viewAppliedRewards" class="wallet-view-section u-hidden">
+        <div style="font-size: 0.78rem; font-weight: 800; color: var(--lavender-900); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em;">
+          Applied Rewards on Products
+        </div>
+        <div id="appliedRewardsListContainer"></div>
+        <div id="emptyAppliedState" class="empty-wallet-card u-hidden">
+          <strong>No Applied Rewards Yet</strong>
+          <p>Rewards redeemed against purchases will appear here.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- DB and Controller scripts -->
+  <script src="js/db.js"></script>
+  <script>
+    /**
+     * Pastel Lavender Mist Wallet Controller
+     * Runs with real IndexedDB data if logged in, or gracefully falls back to Harish demo data!
+     */
+    document.addEventListener('DOMContentLoaded', async () => {
+      const customerNameEl = document.getElementById('customerName');
+      const customerPhoneEl = document.getElementById('customerPhone');
+      const totalPointsEl = document.getElementById('totalPoints');
+      const activeCountEl = document.getElementById('activeCount');
+      const expiredCountEl = document.getElementById('expiredCount');
+      const rewardsListContainer = document.getElementById('rewardsListContainer');
+      const appliedRewardsListContainer = document.getElementById('appliedRewardsListContainer');
+      const emptyGainedState = document.getElementById('emptyGainedState');
+      const emptyAppliedState = document.getElementById('emptyAppliedState');
+      const gainedBadge = document.getElementById('gainedCountBadge');
+      const appliedBadge = document.getElementById('appliedCountBadge');
+      const btnLogout = document.getElementById('btnLogout');
+
+      const tabGained = document.getElementById('tabGainedRewards');
+      const tabApplied = document.getElementById('tabAppliedRewards');
+      const viewGained = document.getElementById('viewGainedRewards');
+      const viewApplied = document.getElementById('viewAppliedRewards');
+
+      // Check current user or load Harish demo user
+      let currentUser = null;
+      if (window.rewardsDB && typeof window.rewardsDB.getCurrentUser === 'function') {
+        currentUser = window.rewardsDB.getCurrentUser();
+      }
+
+      if (!currentUser) {
+        currentUser = {
+          name: 'Harish',
+          phone: '4353535353'
+        };
+      }
+
+      customerNameEl.textContent = currentUser.name || 'Harish';
+      customerPhoneEl.textContent = `+91 ${currentUser.phone}`;
+
+      const avatarEl = document.getElementById('userAvatarInitial');
+      if (avatarEl) {
+        const rawName = (currentUser.name || 'H').trim();
+        avatarEl.textContent = rawName.charAt(0).toUpperCase();
+      }
+
+      if (btnLogout) {
+        btnLogout.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (window.rewardsDB && typeof window.rewardsDB.logoutUser === 'function') {
+            window.rewardsDB.logoutUser();
+          }
+          window.location.href = 'wallet.html';
+        });
+      }
+
+      // Segment Switcher
+      function switchWalletView(isApplied) {
+        tabGained.classList.toggle('active', !isApplied);
+        tabApplied.classList.toggle('active', isApplied);
+        viewGained.classList.toggle('u-hidden', isApplied);
+        viewApplied.classList.toggle('u-hidden', !isApplied);
+      }
+
+      tabGained.addEventListener('click', () => switchWalletView(false));
+      tabApplied.addEventListener('click', () => switchWalletView(true));
+
+      // Toggle Collapsible Card
+      function toggleCard(card, container) {
+        const isExpanded = card.classList.contains('is-expanded');
+        container.querySelectorAll('.reward-card.is-expanded').forEach(c => {
+          c.classList.remove('is-expanded');
+          const h = c.querySelector('.reward-card-header-btn');
+          if (h) h.setAttribute('aria-expanded', 'false');
+        });
+        if (!isExpanded) {
+          card.classList.add('is-expanded');
+          const h = card.querySelector('.reward-card-header-btn');
+          if (h) h.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      // Render 1: Gained Rewards
+      function renderGainedRewards(rewards) {
+        rewardsListContainer.innerHTML = '';
+        const now = new Date();
+        let totalActivePoints = 0, activeCount = 0, expiredCount = 0;
+        let nearestExpReward = null;
+
+        if (!rewards || rewards.length === 0) {
+          emptyGainedState.classList.remove('u-hidden');
+          totalPointsEl.textContent = '0';
+          activeCountEl.textContent = '0 ACTIVE';
+          if (gainedBadge) gainedBadge.textContent = '0';
+          return { totalActivePoints: 0, nearestExpReward: null };
+        }
+
+        emptyGainedState.classList.add('u-hidden');
+        if (gainedBadge) gainedBadge.textContent = rewards.length;
+
+        // Sort rewards in priority queue: Near expiration on top!
+        const queueSortedRewards = [...rewards].sort((a, b) => {
+          const isExpA = a.expiryDate ? new Date(a.expiryDate) < now : false;
+          const isExpB = b.expiryDate ? new Date(b.expiryDate) < now : false;
+          if (!isExpA && isExpB) return -1;
+          if (isExpA && !isExpB) return 1;
+          if (!isExpA && !isExpB) {
+            const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : Infinity;
+            const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : Infinity;
+            if (timeA !== timeB) return timeA - timeB;
+            return new Date(b.orderDate || b.createdAt || 0) - new Date(a.orderDate || a.createdAt || 0);
+          }
+          const timeA = a.expiryDate ? new Date(a.expiryDate).getTime() : 0;
+          const timeB = b.expiryDate ? new Date(b.expiryDate).getTime() : 0;
+          return timeB - timeA;
+        });
+
+        queueSortedRewards.forEach(r => {
+          const pts = Number(r.rewardPoints) || 0;
+          const isExp = r.expiryDate ? new Date(r.expiryDate) < now : false;
+
+          if (!isExp && pts > 0) {
+            totalActivePoints += pts;
+            activeCount++;
+          } else {
+            expiredCount++;
+          }
+
+          let miniExp = 'No Expiry';
+          let isNearExpiry = false;
+          if (r.expiryDate) {
+            const expD = new Date(r.expiryDate);
+            const dateStr = expD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            if (isExp) {
+              miniExp = 'Expired';
+            } else {
+              const diffMs = expD.getTime() - now.getTime();
+              const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+              if (diffDays <= 30) {
+                isNearExpiry = true;
+                miniExp = diffDays <= 7 ? `⏱️ Exp in ${diffDays}d` : `Exp: ${expD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} (${diffDays}d)`;
+              } else {
+                miniExp = `Exp: ${dateStr}`;
+              }
+            }
+          }
+
+          let expFullStr = 'No Expiry';
+          if (r.expiryDate) {
+            const expD = new Date(r.expiryDate);
+            expFullStr = expD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+          }
+
+          let orderDateStr = '';
+          if (r.orderDate) {
+            const ordD = new Date(r.orderDate);
+            if (!isNaN(ordD.getTime())) {
+              orderDateStr = ordD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            } else {
+              orderDateStr = r.orderDate;
+            }
+          }
+
+          const card = document.createElement('div');
+          card.className = `reward-card ${isExp ? 'is-expired' : ''}`;
+          card.innerHTML = `
+            <div class="reward-card-header-btn" role="button" tabindex="0" aria-expanded="false">
+              <div class="reward-card-item">
+                <div class="thumb-box">${r.productImage ? `<img src="${r.productImage}" alt="${r.productName || ''}" />` : '🎁'}</div>
+                <div class="reward-card-info">
+                  <div class="reward-card-title">${r.productName || 'Order Reward'}</div>
+                  <div class="reward-card-subrow">
+                    <span class="reward-pts-grant ${isExp ? 'is-expired-pts' : ''}">+${pts.toLocaleString()} PTS</span>
+                    <span class="card-pill-mini ${isExp ? 'pill-expired' : 'pill-active'}">${miniExp}</span>
+                  </div>
+                </div>
+                <div class="reward-card-chevron-box">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="reward-card-drawer">
+              <div class="reward-drawer-inner">
+                <div class="reward-breakdown-card">
+                  <div class="breakdown-card-top">
+                    <span class="breakdown-card-title">Reward Details</span>
+                    <span class="breakdown-status-badge ${isExp ? 'is-expired' : 'is-active'}">
+                      ${isExp ? 'Expired' : 'Verified Order'}
+                    </span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Order ID</span>
+                    <span class="breakdown-val"><code class="val-order-code">#${r.orderId || 'N/A'}</code></span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Order Total</span>
+                    <span class="breakdown-val breakdown-bold">₹${Number(r.orderAmount || 0).toLocaleString()}</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Reward Rate</span>
+                    <span class="breakdown-val"><span class="badge-reward-rate">${r.rewardPercent || 10}% Earned</span></span>
+                  </div>
+                  ${orderDateStr ? `
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Order Date</span>
+                    <span class="breakdown-val">${orderDateStr}</span>
+                  </div>` : ''}
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Valid Until</span>
+                    <span class="breakdown-val ${isExp ? 'font-expired' : 'font-valid'}">${expFullStr}</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+
+          card.querySelector('.reward-card-header-btn').addEventListener('click', () => toggleCard(card, rewardsListContainer));
+          rewardsListContainer.appendChild(card);
+        });
+
+        totalPointsEl.textContent = totalActivePoints.toLocaleString();
+        activeCountEl.textContent = `${activeCount} ACTIVE`;
+        if (expiredCountEl) expiredCountEl.textContent = `${expiredCount} EXPIRED`;
+        return { totalActivePoints, nearestExpReward };
+      }
+
+      // Render 2: Applied Rewards on Products
+      function renderAppliedRewards(appliedList) {
+        appliedRewardsListContainer.innerHTML = '';
+        if (!appliedList || appliedList.length === 0) {
+          emptyAppliedState.classList.remove('u-hidden');
+          if (appliedBadge) appliedBadge.textContent = '0';
+          return;
+        }
+
+        emptyAppliedState.classList.add('u-hidden');
+        if (appliedBadge) appliedBadge.textContent = appliedList.length;
+
+        appliedList.forEach(a => {
+          const orderRef = (a.orderId && a.orderId !== 'N/A' && a.orderId.trim()) ? a.orderId : ('ORD-' + (a.id || 101));
+          const card = document.createElement('div');
+          card.className = 'reward-card';
+          card.innerHTML = `
+            <div class="reward-card-header-btn" role="button" tabindex="0" aria-expanded="false">
+              <div class="reward-card-item">
+                <div class="thumb-box">
+                  ${a.productImage ? `<img src="${a.productImage}" alt="" />` : `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#7e22ce" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`}
+                </div>
+                <div class="reward-card-info">
+                  <div class="reward-card-title">${a.productName}</div>
+                  <div class="reward-card-subrow">
+                    <span class="card-date-text">${a.date || '2026-11-16'}</span>
+                    <span class="pill-order-ref">#${orderRef}</span>
+                  </div>
+                </div>
+                <div class="reward-card-chevron-box">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="reward-card-drawer">
+              <div class="reward-drawer-inner">
+                <div class="reward-breakdown-card">
+                  <div class="breakdown-card-top">
+                    <span class="breakdown-card-title">Redemption Details</span>
+                    <span class="breakdown-status-badge is-applied">Applied</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Product Price</span>
+                    <span class="breakdown-val breakdown-bold">₹${Number(a.productPrice || 0).toLocaleString()}</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Rewards Applied</span>
+                    <span class="breakdown-val font-redeemed-pts">-${Number(a.pointsApplied || 0).toLocaleString()} PTS</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Paid to Shopkeeper</span>
+                    <span class="breakdown-val breakdown-due-amount">₹${Number(a.dueAmount || 0).toLocaleString()}</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span class="breakdown-label">Order Reference</span>
+                    <span class="breakdown-val"><code class="val-order-code">#${orderRef}</code></span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+
+          card.querySelector('.reward-card-header-btn').addEventListener('click', () => toggleCard(card, appliedRewardsListContainer));
+          appliedRewardsListContainer.appendChild(card);
+        });
+      }
+
+      // Load Data (From DB or Sample Data for Harish)
+      async function loadWallet() {
+        let rewards = [];
+        let applied = [];
+
+        try {
+          if (window.rewardsDB && currentUser.phone) {
+            rewards = await window.rewardsDB.getRewardsByPhone(currentUser.phone);
+            applied = await window.rewardsDB.getAppliedRewardsByPhone(currentUser.phone);
+          }
+        } catch(e) {
+          console.warn('DB lookup error:', e);
+        }
+
+        // If no data exists for this demo phone, populate rich demo items matching Harish's wallet
+        if (!rewards || rewards.length === 0) {
+          rewards = [
+            {
+              id: 101,
+              productName: 'Nike Air Max 270 React Sneakers',
+              rewardPoints: 850,
+              orderAmount: 8500,
+              rewardPercent: 10,
+              orderId: 'ORD-8942',
+              orderDate: '2026-11-15',
+              expiryDate: '2027-11-15',
+              productImage: ''
+            },
+            {
+              id: 102,
+              productName: 'Sony WH-1000XM5 Wireless Headphones',
+              rewardPoints: 1200,
+              orderAmount: 12000,
+              rewardPercent: 10,
+              orderId: 'ORD-7719',
+              orderDate: '2026-11-10',
+              expiryDate: '2027-11-10',
+              productImage: ''
+            },
+            {
+              id: 103,
+              productName: 'Starbucks Premium Dark Roast Coffee',
+              rewardPoints: 400,
+              orderAmount: 4000,
+              rewardPercent: 10,
+              orderId: 'ORD-6621',
+              orderDate: '2026-11-04',
+              expiryDate: '2026-11-28', // Nearest expiry example!
+              productImage: ''
+            },
+            {
+              id: 104,
+              productName: 'Logitech MX Master 3S Mouse',
+              rewardPoints: 350,
+              orderAmount: 3500,
+              rewardPercent: 10,
+              orderId: 'ORD-5412',
+              orderDate: '2026-10-22',
+              expiryDate: '2027-10-22',
+              productImage: ''
+            }
+          ];
+        }
+
+        if (!applied || applied.length === 0) {
+          applied = [
+            {
+              id: 201,
+              productName: 'Apple MagSafe Battery Pack',
+              productPrice: 6500,
+              pointsApplied: 650,
+              dueAmount: 5850,
+              orderId: 'ORD-4401',
+              date: '2026-11-16'
+            },
+            {
+              id: 202,
+              productName: 'Kindle Paperwhite 16GB Edition',
+              productPrice: 14000,
+              pointsApplied: 1400,
+              dueAmount: 12600,
+              orderId: 'ORD-3912',
+              date: '2026-11-02'
+            }
+          ];
+        }
+
+        const { totalActivePoints } = renderGainedRewards(rewards);
+        renderAppliedRewards(applied);
+      }
+
+      await loadWallet();
+    });
+  </script>
+</body>
+</html>

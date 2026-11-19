@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Customer Login - Rewards Points collection for customers</title>
+  <link rel="stylesheet" href="css/wireframe.css">
+</head>
+<body>
+  <div class="mobile-device-shell">
+    <header class="mobile-status-bar">
+      <span>9:41</span>
+      <div class="notch-pill"></div>
+      <span class="header-pill">USER</span>
+    </header>
+
+    <div class="mobile-header">
+      <span class="header-pill">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" stroke="none" style="display: inline-block; vertical-align: -1px; margin-right: 3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        LOGIN
+      </span>
+      <span class="header-title">Customer Login</span>
+      <a href="register.html" class="header-btn">Register</a>
+    </div>
+
+    <div class="wf-toast" id="notification"></div>
+
+    <main class="mobile-viewport">
+      <form id="loginForm">
+        <div class="wf-card">
+          <div class="wf-form-group">
+            <label class="wf-label" for="identifier">Mobile Phone Number *</label>
+            <input type="tel" id="identifier" name="username" inputmode="numeric" class="wf-input" placeholder="e.g. 9876543210" value="9876543210" required>
+          </div>
+
+          <div class="wf-form-group" style="margin-bottom: 0;">
+            <label class="wf-label" for="password">Password *</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" class="wf-input" placeholder="••••••••" value="password123" required>
+          </div>
+        </div>
+
+        <button type="submit" id="btnSignIn" class="wf-btn" style="margin-bottom: 10px;">
+          Sign In to Wallet
+        </button>
+      </form>
+
+      <button type="button" id="btnDemoLogin" class="wf-btn wf-btn-secondary wf-btn-sm" style="width: 100%; margin-bottom: 14px;">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" stroke="none" style="display: inline-block; vertical-align: -1px; margin-right: 3px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Fill Demo Customer (Rahul: 9876543210)
+      </button>
+
+      <div class="wf-card dashed" style="text-align: center;">
+        <span class="wf-title-sm" style="font-size: 0.78rem; display: block; margin-bottom: 4px;">New Customer?</span>
+        <p class="wf-meta" style="margin-bottom: 8px;">Create an account with your mobile number</p>
+        <a href="register.html" class="wf-btn wf-btn-secondary wf-btn-sm" style="display: inline-block;">Register Account</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

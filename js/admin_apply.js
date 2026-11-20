@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (summaryPrice) summaryPrice.textContent = `₹${price.toLocaleString()}`;
     if (summaryPointsApplied) {
-      summaryPointsApplied.textContent = `-${autoCalculatedPoints.toLocaleString()} PTS (₹${autoCalculatedPoints.toLocaleString()} at ${activeCappingPercent}% Cap)`;
+      summaryPointsApplied.textContent = `-${autoCalculatedPoints.toLocaleString()} PTS (${activeCappingPercent}% Cap)`;
     }
     if (dueAmountDisplay) dueAmountDisplay.textContent = `₹${autoCalculatedDue.toLocaleString()}`;
   }
@@ -102,7 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productPriceInput) productPriceInput.value = '';
     applyPhotoData = '';
     if (applyPhotoInput) applyPhotoInput.value = '';
-    if (applyPhotoPreview) applyPhotoPreview.innerHTML = '<span>NO PHOTO</span>';
+    const upTxt = document.getElementById('applyPhotoUploadText');
+    if (upTxt) upTxt.textContent = 'Choose product photo';
+    if (applyPhotoPreview) applyPhotoPreview.innerHTML = '<span>NO<br>PHOTO</span>';
     recalculateApplyMath();
   };
 
@@ -110,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnSampleTvApply) {
     btnSampleTvApply.addEventListener('click', () => {
       applyPhotoData = 'assets/smart_google_tv.jpg';
+      const upTxt = document.getElementById('applyPhotoUploadText');
+      if (upTxt) upTxt.textContent = 'smart_google_tv.jpg';
       if (applyPhotoPreview) applyPhotoPreview.innerHTML = `<img src="${applyPhotoData}" alt="Thumb" />`;
       if (window.showAdminToast) window.showAdminToast('Attached Smart TV photo to Apply form');
     });
@@ -118,7 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (applyPhotoInput) {
     applyPhotoInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
-      if (!file) { applyPhotoData = ''; if (applyPhotoPreview) applyPhotoPreview.innerHTML = '<span>NO PHOTO</span>'; return; }
+      const upTxt = document.getElementById('applyPhotoUploadText');
+      if (!file) {
+        applyPhotoData = '';
+        if (upTxt) upTxt.textContent = 'Choose product photo';
+        if (applyPhotoPreview) applyPhotoPreview.innerHTML = '<span>NO<br>PHOTO</span>';
+        return;
+      }
+      if (upTxt) upTxt.textContent = file.name;
       const reader = new FileReader();
       reader.onload = (ev) => {
         const img = new Image();
@@ -163,6 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (productNameInput) productNameInput.value = 'Sony Bravia 55" Smart Google TV';
       if (productPriceInput) productPriceInput.value = '42000';
       applyPhotoData = 'assets/smart_google_tv.jpg';
+      const upTxt = document.getElementById('applyPhotoUploadText');
+      if (upTxt) upTxt.textContent = 'smart_google_tv.jpg';
       if (applyPhotoPreview) applyPhotoPreview.innerHTML = `<img src="${applyPhotoData}" alt="Thumb" />`;
       recalculateApplyMath();
       if (window.showAdminToast) {

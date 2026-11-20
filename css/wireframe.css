@@ -198,7 +198,7 @@ body::before {
   transform: translateY(-50%);
   width: 6px;
   height: 6px;
-  background-color: #1e293b;
+  background-color: #121b2a;
   border-radius: 50%;
 }
 
@@ -1346,8 +1346,7 @@ input:-webkit-autofill:focus {
 /* Breakdown Card inside Drawer */
 .reward-breakdown-card {
   background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
+   border-radius: 14px;
   padding: 12px 14px;
   margin-top: 4px;
   display: flex;
@@ -1938,9 +1937,9 @@ input:-webkit-autofill:focus {
 }
 
 .card-customer-sub {
-  font-size: 0.72rem;
+  font-size: 0.6rem;
   font-weight: 600;
-  color: #475569;
+  color:var(--glacier-800) !important;
 }
 
 .card-date-text,
@@ -1991,9 +1990,7 @@ input:-webkit-autofill:focus {
 }
 
 /* Card Drawer Inner & Breakdown Details */
-.reward-drawer-pad {
-  padding: 0 10px 8px 10px;
-}
+ 
 
 .breakdown-row-due {
   border-top: 1px dashed #cbd5e1;

@@ -88,12 +88,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const dateIn = $('orderDate'); if (dateIn) dateIn.value = new Date().toISOString().split('T')[0];
     base64PhotoData = '';
     if (photoInput) photoInput.value = '';
-    if (photoPreview) photoPreview.innerHTML = '<span>NO PHOTO</span>';
+    const upTxt = $('photoUploadText'); if (upTxt) upTxt.textContent = 'Choose product photo';
+    if (photoPreview) photoPreview.innerHTML = '<span>NO<br>PHOTO</span>';
     const ptsBox = $('pointsGivenContainer'); if (ptsBox) ptsBox.classList.add('u-hidden');
     applySettingsToUI(window.getAdminSettings());
   };
 
-  if (btnAdminRefresh) btnAdminRefresh.addEventListener('click', async () => { window.resetGrantForm(); if (window.resetApplyForm) window.resetApplyForm(); await loadRewardsAndStats(); window.showAdminToast('Forms cleared & DB refreshed'); });
+  if (btnAdminRefresh) btnAdminRefresh.addEventListener('click', async () => { window.resetGrantForm(); if (window.resetApplyForm) window.resetApplyForm(); await loadRewardsAndStats(); window.showAdminToast('Refreshed & reloaded'); });
   if (btnResetForm) btnResetForm.addEventListener('click', () => { window.resetGrantForm(); window.showAdminToast('Form fields cleared'); });
   if (btnSampleData) {
     btnSampleData.addEventListener('click', () => {
@@ -103,6 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       setVal('productName', 'Sony 55" 4K Smart Google TV'); setVal('orderAmount', '45000');
       setVal('orderDate', new Date().toISOString().split('T')[0]);
       base64PhotoData = 'assets/smart_google_tv.jpg';
+      const upTxt = $('photoUploadText'); if (upTxt) upTxt.textContent = 'smart_google_tv.jpg';
       if (photoPreview) photoPreview.innerHTML = `<img src="${base64PhotoData}" alt="Thumb" />`;
       updatePointsFromPercent();
       window.showAdminToast('Loaded sample ₹45,000 Smart Google TV order');
@@ -113,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (btnSampleTv) {
     btnSampleTv.addEventListener('click', () => {
       base64PhotoData = 'assets/smart_google_tv.jpg';
+      const upTxt = $('photoUploadText'); if (upTxt) upTxt.textContent = 'smart_google_tv.jpg';
       if (photoPreview) photoPreview.innerHTML = `<img src="${base64PhotoData}" alt="Thumb" />`;
       window.showAdminToast('Attached Smart TV photo to Grant form');
     });
@@ -121,7 +124,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (photoInput) {
     photoInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
-      if (!file) { base64PhotoData = ''; photoPreview.innerHTML = '<span>NO PHOTO</span>'; return; }
+      const upTxt = $('photoUploadText');
+      if (!file) {
+        base64PhotoData = '';
+        if (upTxt) upTxt.textContent = 'Choose product photo';
+        photoPreview.innerHTML = '<span>NO<br>PHOTO</span>';
+        return;
+      }
+      if (upTxt) upTxt.textContent = file.name;
       const reader = new FileReader();
       reader.onload = (ev) => {
         const img = new Image();
@@ -201,7 +211,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="reward-card-info">
                   <div class="admin-applied-header">
                     <strong class="reward-card-title">${item.productName}</strong>
-                    <span class="header-pill pill-applied-pts card-pill-mini">-${item.pointsApplied.toLocaleString()} PTS</span>
+                    <span class="pill-applied-pts">-${item.pointsApplied.toLocaleString()} PTS</span>
                   </div>
                   <div class="reward-card-subrow">
                     <span class="card-customer-sub">${item.customerName}</span>
@@ -249,7 +259,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         card.innerHTML = `
           <div class="admin-reward-card-body" style="display: flex; gap: 8px; align-items: center;">
             <div class="thumb-box" style="width: 38px; height: 38px; min-width: 38px; border-radius: 8px; overflow: hidden; background: #f1f5f9; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0;">
-              ${item.productImage ? `<img src="${item.productImage}" alt="" style="width: 100%; height: 100%; object-fit: cover;" />` : `<span style="font-size: 1rem;">🎁</span>`}
+              ${item.productImage ? `<img src="${item.productImage}" alt="" style="width: 100%; height: 100%; object-fit: cover;" />` : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--glacier-700)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>`}
             </div>
             <div style="flex: 1; min-width: 0;">
               <strong class="reward-card-title">${item.productName}</strong>

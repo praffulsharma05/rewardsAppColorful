@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setVal('settingRewardPercent', s.rewardPercent); setVal('settingExpiryMonths', s.expiryMonths);
     setVal('settingCappingPercent', s.cappingPercent); setVal('settingMinOrderAmount', s.minOrderAmount);
     setText('settingsBadgeReward', `${s.rewardPercent}%`); setText('settingsBadgeExpiry', `${s.expiryMonths}M`);
-    setText('settingsBadgeCapping', `${s.cappingPercent}% / ₹${s.minOrderAmount}`);
+    setText('settingsBadgeCapping', `${s.cappingPercent}%  `);
     setText('pointsGivenRateBadge', `${s.rewardPercent}% Policy`);
     if (rewardPercentInput) rewardPercentInput.value = s.rewardPercent;
     setVal('expiryDate', calculateExpiryDate(s.expiryMonths)); setVal('cappingPercent', s.cappingPercent);
